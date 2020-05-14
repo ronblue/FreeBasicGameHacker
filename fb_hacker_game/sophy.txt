@@ -1,6 +1,6 @@
 g:ICQ #1234567 WELCOME TO ICQ CHAT! PRESS 'q' TO QUIT CONVERSATION
 y:You
-c:sophy(pogi64)
+c:sophie(pogi64)
 s:are>am|are
 s:am>are
 s:were>was|were
@@ -31,11 +31,13 @@ r:Goodbye!
 k:bitch
 k:dyke
 k:whore
+k:suck
+
 
 r:hello :)
 r:do you really care about*
 r:hi stranger nice to chat with you
-r:hello my name is sophy what's yours?
+r:hello my name is sophie what's yours?
 k:hello
 k:hi
 
@@ -43,8 +45,8 @@ r:you have a nice name i hope we can have a nice chat to pass the time
 r:nice to meet you
 k:my name
 
-k:this subject depresses me :(
-k:why do you ask? what makes you bring the subject of*
+r:this subject depresses me :(
+r:why do you ask? what makes you bring the subject of*
 r:i started to drink very young and i never thought i would become addictive to it
 r:yeah tell me about i was in rehab several times for alchoholisem
 r:yes, i have a drinking problem for many yaers
@@ -52,7 +54,7 @@ k:alcohol
 k:aa
 k:a.a.
 
-k:i listen mostly to old blues records chet backer billy holiday etc... tell me about your favorite song...
+r:i listen mostly to old blues records chet backer billy holiday etc... tell me about your favorite song...
 r:my favorite song is 'almost blue' by chet backer what music or song do you like?
 k:chet backer
 k:music

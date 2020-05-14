@@ -9,7 +9,7 @@ DIM SHARED Greeting AS STRING, You AS STRING, Script AS String
 DIM SHARED kCnt AS INTEGER, rCnt AS INTEGER, wCnt AS INTEGER, NoKeyFoundIndex AS INTEGER
 REDIM SHARED keywords(0) AS STRING, replies(0) AS STRING, wordIn(0) AS STRING, wordOut(0) AS STRING
 REDIM SHARED rStarts(0) AS INTEGER, rEnds(0) AS INTEGER, rIndex(0) AS INTEGER
-dim shared as integer sophy_state
+dim shared as integer sophie_state, passport, ticket, escapeMoney
 
 const data_path = "..\data\"
 chdir(exepath())
@@ -178,7 +178,7 @@ FUNCTION GetReply () as string
     END IF
     IF RIGHT(answ, 1) <> "*" THEN GetReply = answ: EXIT FUNCTION 'oh so the * signal an append to reply!
     If Trim(tail) = "" THEN
-        GetReply = "is that all you got to say? " & rIndex(k)
+        GetReply = "is that all you got to say? " 
     ELSE
         tail = joinPunctuation(tail)
         GetReply = MID(answ, 1, LEN(answ) - 1) + tail
@@ -295,7 +295,7 @@ Function hint(n As Integer) As String
 		Case 7:Return "the target has a cat named 'pogi'"
 		Case 8:Return "the birthday yaer of the target is '1964'"
 		Case 9:Return "the target's favorite movie is 'unforgiven'"
-		Case 10:Return "the target uses an AOL email account 'sophy1964@aol.com' and she is also active is several forums on AOL under the nickname 'pogi64'"
+		Case 10:Return "the target uses an AOL email account 'sophie1964@aol.com' and she is also active is several forums on AOL under the nickname 'pogi64'"
 
 	End Select
 End Function
@@ -358,6 +358,76 @@ Sub hints()
 	 
 End Sub
 
+sub runawayMoney()
+	dim cash as integer, message as string
+	cls
+	cp 4, "YOU HAVE NOW " & money & "$"
+	print
+	print
+	print
+	input "HOW MUCH MONEY WILL YOU TRANSFER TO A SECRET BANK ACCOUNT FOR YOUR LIFE AFTER YOU ESCAPE?: ", cash
+	if cash <= 0 then 
+		message = "YOU MUST BE JOKING! COME BACK WHEN YOUR SERIOUS"
+	elseif cash > money then
+		message = "YOU DON'T HAVE THAT AMOUNT OF MONEY! COME BACK LATER"
+	else
+		money = money - cash
+	message = "MONEY TRANSFERED!"
+		escapeMoney = escapeMoney + cash
+	end if
+	 
+	print
+	print
+	print message
+	
+	sleep
+end sub
+
+
+sub tor()
+	dim k as string, pass as string 
+	cls
+	cp 4, "- WELCOME TO TOR DARKNET IDENTITY MARKETPLACE -"
+	cp 6, "1. AN AMERICAN PASSPORT - 45,000 DOLLARS"
+	cp 8, "2. A BRITISH PASSPORT - 40,000 DOLLARS"
+	cp 9, "3. A CANADIAN PASSPORT - 38,000 DOLLARS"
+	cp 10, "4. A SOUTH AMERICAN PASSPORT - 32,000 DOLLARS"
+	cp 12, "5. AN AUSTRALIAN PASSPORT - 30,000 DOLLARS"
+	cp 14, "6. EXIT"
+	k = GetKeys("123456")
+	if k = "1" and money >= 45000 then
+		pass = "AMERICAN PASSPOSRT AQUIERED!"
+		money = money - 45000
+		passport = 1
+	elseif k = "2" and money >= 40000 then
+		pass = "BRITISH PASSPORT AQUIERED!"
+		money = money - 40000
+		passport = 1
+	elseif k = "3" and money >=38000 then
+		pass = "CANADIAN PASSPORT AQUIERED!"
+		money = money - 38000
+		passport = 1 
+	elseif k = "4" and money >= 32000 then
+		pass = "SOUTH AMERICAN PASSPORT AQUIERED!"
+		money = money - 32000
+		passport = 1
+	elseif k = "5" and money >= 30000 then
+		pass = "AUSTRALIAN PASSPORT AQUIERED!"
+		money = money - 30000
+		passport = 1
+	elseif k = "6" then
+		exit sub
+	else
+	pass = "NOT ENOGHT MONEY!"
+	end if
+	
+	print
+	print
+	print pass
+end sub
+
+
+
 Sub email()
 	Dim As String password = "almostblue", guess
 	
@@ -402,8 +472,8 @@ Sub hack()
 	cp 5, HPC
 	cp 6, HW
 	cp 7, "- 3. HACK TARGET'S EMAIL ACCOUNT -"
-	cp 8, "- 4. GO TO MAIN -"
-	k = GetKeys("1234")
+	'~ cp 8, "- 4. GO TO MAIN -"
+	k = GetKeys("123")
 	If k = "1" And HhackIndicator = 1 Then 'And HhackCounter = 0 Then
 		h = "YOU SEND AN 'I LOVE YOU' EMAIL WITH A BACKDOOR VIRUS"
 		HhackIndicator = 2
@@ -416,8 +486,8 @@ Sub hack()
 		w = "BRUTE FORCE ON TARGET'S WORK ACCOUNT IN PROGRESS"
 	ElseIf k = "2" And WhackIndicator = 3 Then
 		w = "ACCESS TO TARGET'S WORK ACOUNT GRANTED"
-	ElseIf k = "4" Then
-		Exit Sub
+	'~ ElseIf k = "4" Then
+		'~ Exit Sub
 	ElseIf k = "3" Then
 		email()
 	EndIf
@@ -429,9 +499,27 @@ Sub hack()
 	
 End Sub
 
+sub steal()
+dim k as string, m as string
+
+cls
+cp 4, "YOU GAIN ACCESS TO THE BANK AND FEEL LIKE A KID IN A CANDY STORE... WHAT DO YOU SAY SHELL WE STEAL SOME MONEY FROM THE BANK?"
+cp 6, "- 1. STEAL 100,000 DOLLARS OR 2. STAY HONEST AND DON'T TOUCH THE MONEY -"
+k = getkeys("12")
+if k = "1" then
+      m = "YOU STEAL 100,000 DOLLARS FROM THE BANK AND NOW YOU ARE A WANTED CRIMINAL"
+      money = money + 100000
+   ELSEIF k = "2" then
+      m = "YOU DID THE RIGHT SMART THING AND KEPT FROM BEING EXPOUSED IT MAY NOT IMPROVE YOUR WALLET BUT YOU LIVE AT PEACE WITH YOURSELF"
+   end if
+   print
+   print
+   print m
+	sleep
+end sub
 
 Sub spy()
-	Dim As String k, spy1, k2, steal, m
+	Dim As String k, spy1
 	Cls
 	cp 2, "- SPY ON TARGET -"
 	cp 5, "- 1. AOL FORUMS -"
@@ -452,30 +540,20 @@ Sub spy()
    ELSEIF k = "4" and WhackIndicator < 3 then
       spy1 = "YOU DO NOT HAVE ACCESS TO TARGET'S WORK ACCOUNT"
    elseif k = "4" and WhackIndicator >= 3 then
-      spy1 = "YOU GAIN ACCESS TO THE BANK AND FEEL LIKE A KID IN A CANDY STORE... WHAT DO YOU SAY SHELL WE STEAL SOME MONEY FROM THE BANK?"      
-      steal = "- 1. STEAL 100,000 DOLLARS OR 2. STAY HONEST AND DON'T TOUCH THE MONEY -"  
+      steal()
+      exit sub  
    end if
    print
    print
    print spy1
    print
-   print steal
-   k2 = getkeys("12")
-   if k2 = "1" then
-      m = "YOU STEAL 100,000 DOLLARS FROM THE BANK AND NOW YOU ARE A WANTED CRIMINAL"
-      money = money + 100000
-   ELSEIF k2 = "2" then
-      m = "YOU DID THE RIGHT SMART THING AND KEPT FROM BEING EXPOUSED IT MAY NOT IMPROVE YOUR WALLET BUT YOU LIVE AT PEACE WITH YOURSELF"
-   end if
-   print
-   print
-   print m
+   
 	sleep
 End Sub
 
 Sub escape()
 	Cls
-	Dim k As String
+	Dim k As String, message as string
 	cp 2, dates1(Time2)
 	cp 4, "MONEY: " + Str(money) + "$"
 	Color 4:cp 6, "- ESCAPE PLAN -"
@@ -486,7 +564,7 @@ Sub escape()
 	cp 12, "AND DISAPPEAR COVERING YOUR TRACKS"
 	cp 13, "OTHERWISE WHETHER OR NOT YOU FINISH YOUR JOB YOU ARE A DEAD MAN"
 	cp 15, "- 1. CREATE A FAKE IDENTITIY -"
-	cp 16, "- 2. PREPARE MONEY -"
+	cp 16, "- 2. PREPARE MONEY (ONE TIME OPPORTUNITY ONLY) -"
 	cp 17, "- 3. BUY A RUNAWAY TICKET -"
 	cp 18, "- 4. DISAPPEAR -"
 	cp 19, "- 5. SWITCH SIDE (CONTACT THE FBI) -":Color 7
@@ -494,10 +572,22 @@ Sub escape()
 	k = GetKeys("123456")
 	If k = "6" Then
 		Exit Sub
-   elseif k = "4" then
+	elseif k = "4" then
       the_end("end.txt")
+	elseif k = "1" then
+		select case passport
+		case 0
+			tor()
+		case 1
+			message = "YOU ALREADY HAVE A PASSPORT AND A FAKE IDENTITY!"
+		end select
+	elseif k = "2" then
+		runawayMoney()
+		
 	EndIf
-	
+	print
+	print
+	print message
 	Sleep()
 End Sub
 
@@ -522,10 +612,11 @@ Sub job()
       spy()
    elseif k = "3" then
       cls
-      if sophy_state = 0 then
-         conversation("sophy.txt")
-      else
-         print "test":sleep
+      if sophie_state = 0 then
+		conversation("sophy.txt")
+      elseif sophie_state = 1 then
+		conversation("sophy2.txt")
+         
       end if
    elseif k = "4" then
       cp 14, "YOU WRITE AN ANONYMOUS BLACKMAIL EMAIL FOR 40,000 DOLLARES AND SEND IT TO SOPHY"
@@ -534,7 +625,7 @@ Sub job()
       CLS
       cp 8, "SOPHY TRIED TO COMMITE SUICIDE AND NOW IS AT THE HOSPITAL, YOU ARE WANTED BY THE POLICE"
       cp 10, "PRESS ANY KEY..."
-      sophy_state = 1
+      sophie_state = 1
       sleep
       
    EndIf
