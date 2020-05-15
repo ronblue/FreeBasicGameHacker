@@ -30,8 +30,8 @@ Sub sound(f As String)
    endif
 end sub
 
-SUB the_end(f as String)
-sound("./Vespers.wav")
+SUB the_end(f as String, music as string)
+sound(music)
 cls
 dim as string buffer
 dim h as long = freefile()
@@ -388,15 +388,15 @@ sub tor()
 	dim k as string, pass as string 
 	cls
 	cp 4, "- WELCOME TO TOR DARKNET IDENTITY MARKETPLACE -"
-	cp 6, "1. AN AMERICAN PASSPORT - 45,000 DOLLARS"
+	cp 7, "1. AN AMERICAN PASSPORT - 45,000 DOLLARS"
 	cp 8, "2. A BRITISH PASSPORT - 40,000 DOLLARS"
 	cp 9, "3. A CANADIAN PASSPORT - 38,000 DOLLARS"
 	cp 10, "4. A SOUTH AMERICAN PASSPORT - 32,000 DOLLARS"
-	cp 12, "5. AN AUSTRALIAN PASSPORT - 30,000 DOLLARS"
-	cp 14, "6. EXIT"
+	cp 11, "5. AN AUSTRALIAN PASSPORT - 30,000 DOLLARS"
+	cp 13, "6. EXIT"
 	k = GetKeys("123456")
 	if k = "1" and money >= 45000 then
-		pass = "AMERICAN PASSPOSRT AQUIERED!"
+		pass = "AMERICAN PASSPORT AQUIERED!"
 		money = money - 45000
 		passport = 1
 	elseif k = "2" and money >= 40000 then
@@ -573,7 +573,7 @@ Sub escape()
 	If k = "6" Then
 		Exit Sub
 	elseif k = "4" then
-      the_end("end.txt")
+      the_end("end.txt","./Vespers.wav")
 	elseif k = "1" then
 		select case passport
 		case 0
@@ -619,11 +619,11 @@ Sub job()
          
       end if
    elseif k = "4" then
-      cp 14, "YOU WRITE AN ANONYMOUS BLACKMAIL EMAIL FOR 40,000 DOLLARES AND SEND IT TO SOPHY"
+      cp 14, "YOU WRITE AN ANONYMOUS BLACKMAIL EMAIL FOR 40,000 DOLLARES AND SEND IT TO SOPHIE"
       cp 16, "PRESS ANY KEY..."
       SLEEP
       CLS
-      cp 8, "SOPHY TRIED TO COMMITE SUICIDE AND NOW IS AT THE HOSPITAL, YOU ARE WANTED BY THE POLICE"
+      cp 8, "SOPHIE TRYS TO COMMITE SUICIDE AND NOW IS AT THE HOSPITAL, YOU ARE WANTED BY THE POLICE"
       cp 10, "PRESS ANY KEY..."
       sophie_state = 1
       sleep
