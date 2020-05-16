@@ -9,8 +9,11 @@ DIM SHARED Greeting AS STRING, You AS STRING, Script AS String
 DIM SHARED kCnt AS INTEGER, rCnt AS INTEGER, wCnt AS INTEGER, NoKeyFoundIndex AS INTEGER
 REDIM SHARED keywords(0) AS STRING, replies(0) AS STRING, wordIn(0) AS STRING, wordOut(0) AS STRING
 REDIM SHARED rStarts(0) AS INTEGER, rEnds(0) AS INTEGER, rIndex(0) AS INTEGER
-dim shared as integer sophie_state, passport, ticket, escapeMoney
-
+dim shared as integer sophie_state = 0 , passport = 0, ticket = 0, escapeMoney = 0
+'~ sophie_state = 0
+'~ passport = 0
+'~ ticket = 0
+'~ escapeMoney = 0
 const data_path = "..\data\"
 chdir(exepath())
 
@@ -30,31 +33,34 @@ Sub sound(f As String)
    endif
 end sub
 
-SUB the_end(f as String, music as string)
-sound(music)
-cls
-dim as string buffer
-dim h as long = freefile()
-open f for binary as #h
-buffer = space(lof(1))
-get #h,,buffer
-print buffer
-close #h
-sleep()
-end
+SUB the_end(f as String,soundChoice as integer)
+	if soundChoice = 0 then
+		sound("./Vespers.wav")
+	elseif soundChoice = 1 then
+		beep:beep:beep:beep:beep
+	end if
+	cls
+	dim as string buffer
+	dim h as long = freefile()
+	open f for binary as #h
+	buffer = space(lof(1))
+	get #h,,buffer
+	print buffer
+	close #h
+	sleep()
+	end
 end sub
 
 'append to the string array the string item
 SUB sAppend (arr() AS STRING, item AS STRING)
     REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS STRING
     arr(UBOUND(arr)) = item
-END SUB
-
+end sub
 'append to the integer array the integer item
 SUB nAppend (arr() AS INTEGER, item AS INTEGER)
     REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
     arr(UBOUND(arr)) = item
-END Sub
+end sub
 
 ' pull data out of some script file
 SUB LoadArrays (scriptFile AS STRING)
@@ -358,6 +364,40 @@ Sub hints()
 	 
 End Sub
 
+sub airplane()
+	dim k as string, message as string
+	cls
+	cp 4, "CHOOSE A DESTINATION..."
+	cp 6, "1. GET LOST IN NORTH AMERICA - 20,000$"
+	cp 7, "2. DISAPPEAR IN SOUTH AMERICA - 16,000$"
+	cp 8, "3. VANISH IN ASIA - 12,000$"
+	cp 9, "4. ON WAY TICKET TO NO-WHERE - 9,000$"
+	cp 10, "GO BACK AND THINK OF IT"
+	k = getkeys("12345")
+	if k = "1" and money >= 20000 then
+	message = "YOU CAN NOW GET LOST IN NORTH AMERICA"
+	ticket = 1
+	elseif k = "2" and money >= 16000 then
+	message = "YOU CAN NOW DISAPPEAR IN SOUTH AMERICA"
+	ticket = 1
+	elseif k = "3" and money >= 12000 then
+	message = "YOU CAN NOW VANISH IN ASIA"
+	ticket = 1
+	elseif k ="4" and money >= 9000 then
+	message = "YOU CAN NOW GO TO NO-WHERE"
+	ticket = 1
+	elseif k ="5" then
+	exit sub
+	else
+	message = "COME BACK WHEN YOU ARE SERIOUS AND HAVE THE MONEY PAL!"
+	end if
+	print
+	print
+	print
+	print message
+end sub
+
+
 sub runawayMoney()
 	dim cash as integer, message as string
 	cls
@@ -564,7 +604,7 @@ Sub escape()
 	cp 12, "AND DISAPPEAR COVERING YOUR TRACKS"
 	cp 13, "OTHERWISE WHETHER OR NOT YOU FINISH YOUR JOB YOU ARE A DEAD MAN"
 	cp 15, "- 1. CREATE A FAKE IDENTITIY -"
-	cp 16, "- 2. PREPARE MONEY (ONE TIME OPPORTUNITY ONLY) -"
+	cp 16, "- 2. PREPARE MONEY -"
 	cp 17, "- 3. BUY A RUNAWAY TICKET -"
 	cp 18, "- 4. DISAPPEAR -"
 	cp 19, "- 5. SWITCH SIDE (CONTACT THE FBI) -":Color 7
@@ -573,7 +613,11 @@ Sub escape()
 	If k = "6" Then
 		Exit Sub
 	elseif k = "4" then
-      the_end("end.txt","./Vespers.wav")
+	  if passport = 1 and ticket = 1 and escapeMoney > 0 then
+		the_end("end.txt",0)
+      else
+		message = "YOU ARE NOT READY TO DISAPPEAR"
+      end if
 	elseif k = "1" then
 		select case passport
 		case 0
@@ -583,8 +627,14 @@ Sub escape()
 		end select
 	elseif k = "2" then
 		runawayMoney()
-		
-	EndIf
+	elseif k = "3" then
+		select case ticket
+		case 0
+		airplane()
+		case 1
+		message = "YOU ALREADY HAVE A ONE WAY TICKET OUT OF HERE!"
+		END SELECT
+	End If
 	print
 	print
 	print message
