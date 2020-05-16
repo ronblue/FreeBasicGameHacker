@@ -37,7 +37,11 @@ SUB the_end(f as String,soundChoice as integer)
 	if soundChoice = 0 then
 		sound("./Vespers.wav")
 	elseif soundChoice = 1 then
-		beep:beep:beep:beep:beep
+		beep
+		beep
+		beep
+		beep
+		beep
 	end if
 	cls
 	dim as string buffer
@@ -634,7 +638,11 @@ Sub escape()
 		case 1
 		message = "YOU ALREADY HAVE A ONE WAY TICKET OUT OF HERE!"
 		END SELECT
+	elseif k = "5" then
+		the_end("goodEnd.txt", 0)
+	
 	End If
+	
 	print
 	print
 	print message
@@ -704,9 +712,9 @@ Sub main()
 		ElseIf k = "3" Then
 			Time2 += 1
 			money += 800
-			'GoTo 100
-		'ElseIf k3$ = Chr$(27) Then
-		'	End
+			if Time2 = 14 then
+			the_end("badEnd.txt", 1)
+			end if
 		End If 
 	Loop Until k = Chr(27)
 End Sub
